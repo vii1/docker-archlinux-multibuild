@@ -7,13 +7,15 @@
 #echo WINE=$WINE
 #echo capa = $1
 
+PACMAN_FLAGS = --noconfirm --noprogressbar --needed
+
 # Windows (x86 y amd64)
 install_windows()
 {
     case "$PLATFORM" in
         *windows*)
             # Install MingW packages
-            pacman -S --noconfirm --noprogressbar \
+            pacman -S $PACMAN_FLAGS \
                 mingw-w64-binutils \
                 mingw-w64-crt \
                 mingw-w64-gcc \
@@ -67,13 +69,10 @@ install_windows()
                 mingw-w64-qt4 \
                 mingw-w64-boost \
                 mingw-w64-qca-qt5 \
-            && pacman -S --noconfirm --noprogressbar \
+            && pacman -S $PACMAN_FLAGS \
                 --force \
-                # Conflicts with qt5-base
                 mingw-w64-qt5-tools \
-                # Requires qt5-tools
                 mingw-w64-qt5-quick1 \
-                # Requires qt5-tools
                 mingw-w64-qt5-translations \
             || exit 1
             ;;
@@ -85,13 +84,13 @@ function install_linux()
     # Linux
     case "$PLATFORM" in
         *linux*)
-            pacman -S --noconfirm --noprogressbar \
+            pacman -S $PACMAN_FLAGS \
                 gcc \
             || exit 1
             # Linux amd64
             case "$ARCH" in
                 *amd64*)
-                    pacman -S --noconfirm --noprogressbar \
+                    pacman -S $PACMAN_FLAGS \
                         linux-headers \
                         fontconfig \
                         freeglut \
@@ -140,7 +139,7 @@ function install_linux()
                     # Falta: pdcurses ? -> cambiado por ncurses
                     # Falta: iconv
                     # Falta: sdl2_net
-                    pacman -S --noconfirm --noprogressbar \
+                    pacman -S $PACMAN_FLAGS \
                         lib32-gcc-libs \
                         lib32-fontconfig \
                         lib32-freeglut \
@@ -167,7 +166,7 @@ function install_wine()
 {
     # Wine
     if [ "$WINE" = "1" ]; then
-        pacman -S --noconfirm --noprogressbar \
+        pacman -S $PACMAN_FLAGS \
             libglvnd \
             lib32-libglvnd \
             wine \
