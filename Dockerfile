@@ -5,8 +5,13 @@
 # `pacman -Scc --noconfirm` responds 'N' by default to removing the cache, hence
 # the echo mechanism.
 
+# BUILD ARGS:
+#  WINE=1 -> install Wine
+#  ARCH -> target arch. Any or both of: x86 amd64
+#  PLATFORM -> target platform. Any or both of: windows linux
+
 FROM base/archlinux:latest
-MAINTAINER Wouter Haffmans <wouter@simply-life.net>
+MAINTAINER Gabriel Lorenzo <gabriel.lorenzo@simloc.es>
 
 # Update base system
 RUN    pacman -Sy --noconfirm --noprogressbar archlinux-keyring \
@@ -17,6 +22,11 @@ RUN    pacman -Sy --noconfirm --noprogressbar archlinux-keyring \
     && trust extract-compat \
     && pacman -Syyu --noconfirm --noprogressbar \
     && (echo -e "y\ny\n" | pacman -Scc)
+
+# Multilib repo
+RUN     echo "[multilib]" >> /etc/pacman.conf \
+        && echo "Include = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf \
+        && pacman -Sy
 
 # Add martchus.no-ip.biz repo for mingw binaries
 RUN    echo "[ownstuff]" >> /etc/pacman.conf \
@@ -31,75 +41,37 @@ RUN    echo "[mingw-w64]" >> /etc/pacman.conf \
     && pacman -Sy
 
 # Add some useful packages to the base system
+# Todos los paquetes que no dependan de ARGs aquí
 RUN pacman -S --noconfirm --noprogressbar \
-        imagemagick \
+#        imagemagick \
         make \
         ninja \
         git \
         binutils \
         patch \
+        meson \
+        unzip \
     && (echo -e "y\ny\n" | pacman -Scc)
 
-# Install MingW packages
-RUN pacman -S --noconfirm --noprogressbar \
-        mingw-w64-binutils \
-        mingw-w64-crt \
-        mingw-w64-gcc \
-        mingw-w64-headers \
-        mingw-w64-winpthreads \
-        mingw-w64-bzip2 \
-        mingw-w64-cmake \
-        mingw-w64-expat \
-        mingw-w64-fontconfig \
-        mingw-w64-freeglut \
-        mingw-w64-freetype2 \
-        mingw-w64-gettext \
-        mingw-w64-libdbus \
-        mingw-w64-libiconv \
-        mingw-w64-libjpeg-turbo \
-        mingw-w64-libpng \
-        mingw-w64-libtiff \
-        mingw-w64-libxml2 \
-        mingw-w64-mariadb-connector-c \
-        mingw-w64-nsis \
-        mingw-w64-openssl \
-        mingw-w64-openjpeg \
-        mingw-w64-openjpeg2 \
-        mingw-w64-pcre \
-        mingw-w64-pdcurses \
-        mingw-w64-pkg-config \
-        mingw-w64-qt5-base \
-        mingw-w64-qt5-base-static \
-        mingw-w64-qt5-declarative \
-        mingw-w64-qt5-graphicaleffects \
-        mingw-w64-qt5-imageformats \
-        mingw-w64-qt5-location \
-        mingw-w64-qt5-multimedia \
-        mingw-w64-qt5-quickcontrols \
-        mingw-w64-qt5-script \
-        mingw-w64-qt5-sensors \
-        mingw-w64-qt5-svg \
-        mingw-w64-qt5-webkit \
-        mingw-w64-qt5-websockets \
-        mingw-w64-qt5-winextras \
-        mingw-w64-readline \
-        mingw-w64-sdl2 \
-        mingw-w64-sqlite \
-        mingw-w64-termcap \
-        mingw-w64-tools \
-        mingw-w64-zlib \
-    && pacman -S --noconfirm --noprogressbar \
-        --force \
-        # Conflicts with qt5-base
-        mingw-w64-qt5-tools \
-        # Requires qt5-tools
-        mingw-w64-qt5-quick1 \
-        # Requires qt5-tools
-        mingw-w64-qt5-translations \
-    && (echo -e "y\ny\n" | pacman -Scc)
+COPY install_packages.sh /root/
+RUN chmod +x /root/install_packages.sh
 
-ADD Qt5CoreMacros.cmake /usr/i686-w64-mingw32/lib/cmake/Qt5Core/
-ADD Qt5CoreMacros.cmake /usr/x86_64-w64-mingw32/lib/cmake/Qt5Core/
+# 0 = sin wine, 1 = con wine (32 y 64)
+ARG WINE
+# x86, amd64 o los dos
+ARG ARCH
+# windows, linux o los dos
+ARG PLATFORM
+
+# Capa 1
+RUN /root/install_packages.sh windows
+# Capa 2
+RUN /root/install_packages.sh linux
+# Capa 3
+RUN /root/install_packages.sh wine
+
+COPY Qt5CoreMacros.cmake /usr/i686-w64-mingw32/lib/cmake/Qt5Core/
+COPY Qt5CoreMacros.cmake /usr/x86_64-w64-mingw32/lib/cmake/Qt5Core/
 
 # Create devel user...
 RUN useradd -m -d /home/devel -u 1000 -U -G users,tty -s /bin/bash devel
