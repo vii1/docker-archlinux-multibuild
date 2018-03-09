@@ -11,7 +11,7 @@
 #  PLATFORM -> target platform. Any or both of: windows linux
 
 FROM base/archlinux:latest
-MAINTAINER Gabriel Lorenzo <gabriel.lorenzo@simloc.es>
+LABEL maintainer="Gabriel Lorenzo <gabriel.lorenzo@simloc.es>"
 
 # Update base system
 RUN    pacman -Sy --noconfirm --noprogressbar archlinux-keyring \
