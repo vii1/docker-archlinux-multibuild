@@ -7,7 +7,7 @@
 #echo WINE=$WINE
 #echo capa = $1
 
-PACMAN_FLAGS = --noconfirm --noprogressbar --needed
+PACMAN_FLAGS='--noconfirm --noprogressbar --needed'
 
 # Windows (x86 y amd64)
 install_windows()
