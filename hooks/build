@@ -1,0 +1,33 @@
+#!/bin/bash
+case "$CACHE_TAG" in
+	*windows_linux*)
+		PLATFORM='windows linux'
+		;;
+	*windows*)
+		PLATFORM=windows
+		;;
+	*linux*)
+		PLATFORM=linux
+		;;
+esac
+case "$CACHE_TAG" in
+	*x86*)
+		ARCH=x86
+		;;
+	*amd64*)
+		ARCH=amd64
+		;;
+	*)
+		ARCH='x86 amd64'
+		;;
+esac
+case "$CACHE_TAG" in
+	*wine*)
+		WINE=1
+		;;
+	*)
+		WINE=0
+		;;
+esac
+
+docker build -t "$IMAGE_NAME" --build-arg "PLATFORM=$PLATFORM" --build-arg "ARCH=$ARCH" --build-arg "WINE=$WINE" "$DOCKERFILE_PATH"
