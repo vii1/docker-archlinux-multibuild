@@ -30,4 +30,4 @@ case "$CACHE_TAG" in
 		;;
 esac
 
-docker build -t "$IMAGE_NAME" --build-arg "PLATFORM=$PLATFORM" --build-arg "ARCH=$ARCH" --build-arg "WINE=$WINE" "$DOCKERFILE_PATH"
+docker build -t "$IMAGE_NAME" --build-arg "PLATFORM=$PLATFORM" --build-arg "ARCH=$ARCH" --build-arg "WINE=$WINE" .
