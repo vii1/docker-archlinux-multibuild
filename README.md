@@ -7,8 +7,8 @@ Forked from [haffmans/mingw-qt5](https://hub.docker.com/r/haffmans/mingw-qt5/)
 
 ### windows
 All tags containing `windows` have cross-compiling capability to Windows platforms through w64-mingw32. Both x86 and amd64 are always supported. Invoke commands using the prefixes:
-* ''i686-w64-mingw-'' to access the x86 (32-bit) toolchain
-* ''x86_64-w64-mingw-'' to access the amd64 (64-bit) toolchain
+* `i686-w64-mingw` to access the x86 (32-bit) toolchain
+* `x86_64-w64-mingw-` to access the amd64 (64-bit) toolchain
 
 ### linux, linux_x86, linux_amd64
 All tags containing `linux` have compiling capability for Linux. If no architecture is stated, then both (x86 and amd64) are available.
