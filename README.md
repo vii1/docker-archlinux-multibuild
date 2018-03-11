@@ -19,14 +19,14 @@ All tags containing `wine` have Wine installed, including 32-bit and 64-bit bina
 ## Tag chart
 | Tag | Windows x86 (i686-x64-mingw) | Windows amd64 (x86_64-w64-mingw) | Linux x86 | Linux amd64 | Wine |
 | --- | ---------------------------- | -------------------------------- | --------- | ----------- | ---- |
-| linux | - | - | :white_check_mark: | :white_check_mark: | - |
-| linux_amd64 | - | - | - | :white_check_mark: | - |
-| linux_x86 | - | - | :white_check_mark: | - | - |
-| windows | :white_check_mark: | :white_check_mark: | - | - | - |
-| windows_linux | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | - |
-| windows_linux_amd64 | :white_check_mark: | :white_check_mark: | - | :white_check_mark: | - |
-| windows_linux_amd64_wine | :white_check_mark: | :white_check_mark: | - | :white_check_mark: | :white_check_mark: |
-| windows_linux_wine | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| windows_linux_x86 | :white_check_mark: | :white_check_mark: | :white_check_mark: | - | - |
-| windows_linux_x86_wine | :white_check_mark: | :white_check_mark: | :white_check_mark: | - | :white_check_mark: |
-| windows_wine | :white_check_mark: | :white_check_mark: | - | - | :white_check_mark: |
+| linux | - | - | ✅ | ✅ | - |
+| linux_amd64 | - | - | - | ✅ | - |
+| linux_x86 | - | - | ✅ | - | - |
+| windows | ✅ | ✅ | - | - | - |
+| windows_linux | ✅ | ✅ | ✅ | ✅ | - |
+| windows_linux_amd64 | ✅ | ✅ | - | ✅ | - |
+| windows_linux_amd64_wine | ✅ | ✅ | - | ✅ | ✅ |
+| windows_linux_wine | ✅ | ✅ | ✅ | ✅ | ✅ |
+| windows_linux_x86 | ✅ | ✅ | ✅ | - | - |
+| windows_linux_x86_wine | ✅ | ✅ | ✅ | - | ✅ |
+| windows_wine | ✅ | ✅ | - | - | ✅ |
