@@ -69,7 +69,8 @@ install_windows()
                 mingw-w64-qt4 \
                 mingw-w64-boost \
                 mingw-w64-qca-qt5 \
-            && pacman -S $PACMAN_FLAGS \
+             || exit 1
+             pacman -S $PACMAN_FLAGS \
                 --force \
                 mingw-w64-qt5-tools \
                 mingw-w64-qt5-quick1 \
@@ -94,6 +95,7 @@ function install_linux()
                         linux-headers \
                         fontconfig \
                         freeglut \
+                        glu \
                         freetype2 \
                         libdbus \
                         libiconv \
@@ -143,6 +145,7 @@ function install_linux()
                         lib32-gcc-libs \
                         lib32-fontconfig \
                         lib32-freeglut \
+                        lib32-glu \
                         lib32-freetype2 \
                         lib32-libdbus \
                         lib32-libjpeg-turbo \
