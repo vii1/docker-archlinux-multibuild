@@ -1,6 +1,8 @@
 # docker-archlinux-multibuild
 Arch Linux image with compiling capability for Windows/Linux x86/amd64, including many popular libs and optionally Wine (to run tests, etc).
 
+See [source at GitHub](https://github.com/vii1/docker-archlinux-multibuild)
+
 Forked from [haffmans/mingw-qt5](https://hub.docker.com/r/haffmans/mingw-qt5/)
 
 ## Available tags
