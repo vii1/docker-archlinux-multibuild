@@ -13,14 +13,17 @@
 FROM base/archlinux:latest
 LABEL maintainer="Gabriel Lorenzo <gabriel.lorenzo@simloc.es>"
 
+# Add mirrorlist (USA to optimize Docker Cloud autobuilds)
+RUN curl -s 'https://www.archlinux.org/mirrorlist/?country=US&protocol=https&ip_version=4' |cut -c 2- > /etc/pacman.d/mirrorlist
+
 # Update base system
 RUN    pacman -Sy --noconfirm --noprogressbar archlinux-keyring \
     && pacman-key --populate \
-    && pacman -Su --noconfirm --noprogressbar pacman \
+    && pacman -Su --noconfirm --noprogressbar --needed pacman \
     && pacman-db-upgrade \
     && pacman -Su --noconfirm --noprogressbar ca-certificates \
     && trust extract-compat \
-    && pacman -Syyu --noconfirm --noprogressbar \
+    && pacman -Syyu --noconfirm --noprogressbar --needed \
     && (echo -e "y\ny\n" | pacman -Scc)
 
 # Multilib repo
@@ -42,8 +45,7 @@ RUN    echo "[mingw-w64]" >> /etc/pacman.conf \
 
 # Add some useful packages to the base system
 # Todos los paquetes que no dependan de ARGs aquí
-RUN pacman -S --noconfirm --noprogressbar \
-#        imagemagick \
+RUN pacman -S --noconfirm --noprogressbar --needed \
         make \
         ninja \
         git \
