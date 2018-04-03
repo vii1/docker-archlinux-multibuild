@@ -37,6 +37,7 @@ install_windows()
                 mingw-w64-mariadb-connector-c \
                 mingw-w64-nsis \
                 mingw-w64-openssl \
+                mingw-w64-openssl-1.0 \
                 mingw-w64-openjpeg \
                 mingw-w64-openjpeg2 \
                 mingw-w64-pcre \
@@ -132,6 +133,8 @@ function install_linux()
                         qt5-quickcontrols2 \
                         qt5-translations \
                         libglvnd \
+                        openssl \
+                        openssl-1.0 \
                     || exit 1
                     ;;
             esac
@@ -158,6 +161,8 @@ function install_linux()
                         lib32-sdl2_ttf \
                         lib32-qt4 \
                         lib32-libglvnd \
+                        lib32-openssl \
+                        lib32-openssl-1.0 \
                     || exit 1
                     ;;
             esac
